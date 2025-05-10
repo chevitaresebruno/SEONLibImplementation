@@ -1,0 +1,15 @@
+Configuration {
+    about: "This is a Test file"
+    software_name: "TestProject"
+    language: python
+}
+
+
+module TestModule
+{
+    entity TestClass {
+        _name: string
+        _number: integer
+    }
+}
+
