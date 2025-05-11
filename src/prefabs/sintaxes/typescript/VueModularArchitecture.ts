@@ -30,7 +30,7 @@ class ActionBaseMethod extends TypescriptMethod
 
     public constructor(name: string, argguments: TypeScriptArggument[], action: string, httpMethod: string, args: string)
     {
-        super("async", argguments, new TypescriptPromisseAny(), null, null);
+        super("async", argguments, new TypescriptPromisseAny(), undefined, undefined);
         this.entityName = name;
         this.actionName = action;
         this.axiosname = httpMethod;
@@ -102,19 +102,20 @@ export default class VueModularArchitecture implements ArchitectureImplementatio
 
     private buildModule(pkg: PackageAbstraction): FolderAbstracion[]
     {
-        let api = this.biuldApiFolder(pkg);
+        let api = this.buildApiFolder(pkg);
         let controller = this.buildController(pkg);
-        let routes = new FolderAbstracion("routes");
-        let types = new FolderAbstracion("types");
+        let routes = this.buildRoutes(pkg);
+        let types = this.buildTypes(pkg);
 
         return [api, controller, routes, types];
     }
 
-    private biuldApiFolder(pgk: PackageAbstraction): FolderAbstracion
+    private buildApiFolder(pgk: PackageAbstraction): FolderAbstracion
     {
         let folder = new FolderAbstracion("api");
 
-        let listApiFiles = pgk.getPackageLevelClasses().map(clazz => new TypescriptFile(clazz.getName(), `import adminApi, { adminApiConfig } from '@/api/admin'
+        let files = pgk.getPackageLevelClasses().map(clazz => new TypescriptFile(clazz.getName(), `
+import adminApi, { adminApiConfig } from '@/api/admin'
 import type {
   ${clazz.getName()},
   ${clazz.getName()}CreateReq,
@@ -123,17 +124,38 @@ import type {
   ${clazz.getName()}GetRes,
   ${clazz.getName()}UpdateRes,
   ${clazz.getName()}DeleteRes,
-} from '../types/${clazz.getName()}.d.ts'`, [], typescriptSintaxe, [
-    new CriarConstrain(clazz),
-    new ObterConstrain(clazz),
-    new AtualizarConstrain(clazz),
-    new ExcluirConstrain(clazz),
-    new ListarConstrain(clazz),
-]));
+} from '../types/${clazz.getName()}.d.ts'
 
-    listApiFiles.forEach(file => folder.addFile(file));
+const ${clazz.getName()}ReqConf = {
+  baseURL: adminApiConfig.baseURL + '${clazz.getName()}',
+}
 
-    return folder;
+export const listar${clazz.getName()} = async () => {
+  return await adminApi.get<${clazz.getName()}ListRes>('/', ${clazz.getName()}ReqConf)
+}
+
+export const criar${clazz.getName()} = async (${clazz.getName()}: ${clazz.getName()}CreateReq) => {
+  return await adminApi.post<${clazz.getName()}CreateRes>('/', ${clazz.getName()}, ${clazz.getName()}ReqConf)
+}
+
+export const obter${clazz.getName()} = async (id: string) => {
+  const { data } = await adminApi.get<${clazz.getName()}GetRes>('/' + id, ${clazz.getName()}ReqConf)
+  return data.value[0]
+}
+
+export const atualizar${clazz.getName()} = async (${clazz.getName()}: ${clazz.getName()}) => {
+  return await adminApi.put<${clazz.getName()}UpdateRes>('/' + ${clazz.getName()}.Id, ${clazz.getName()}, ${clazz.getName()}ReqConf)
+}
+
+export const excluir${clazz.getName()} = async (id: string) => {
+  return await adminApi.delete<${clazz.getName()}DeleteRes>('/' + id, ${clazz.getName()}ReqConf)
+}
+        `, [], typescriptSintaxe, []));
+
+
+        files.forEach(file => folder.addFile(file));
+
+        return folder;
     }
 
     private buildController(pkg: PackageAbstraction): FolderAbstracion
@@ -229,6 +251,77 @@ export const excluir${clazz.getName()}s = async (ids: string[]) => {
     throw error
   }
 }`, [], typescriptSintaxe, []))
+
+        files.forEach(file => folder.addFile(file));
+
+        return folder;
+    }
+
+    private buildRoutes(pkg: PackageAbstraction): FolderAbstracion
+    {
+        let folder = new FolderAbstracion("routes");
+
+        let files = pkg.getPackageLevelClasses().map(clazz => new TypescriptFile("index", `
+import type { RouteRecordRaw } from 'vue-router'
+import Listar from '../views/Listar.vue'
+import Criar from '../views/Criar.vue'
+
+export const routes: RouteRecordRaw[] = [
+  {
+    name: '${clazz.getName()}-home',
+    path: 'home',
+    component: Listar,
+  },
+  {
+    name: '${clazz.getName()}-criar',
+    path: 'criar/:id?',
+    component: Criar,
+  }
+]
+            `, [], typescriptSintaxe, []));
+
+        files.forEach(file => folder.addFile(file));
+
+        return folder;
+    }
+
+    private buildTypes(pkg: PackageAbstraction): FolderAbstracion
+    {
+        let folder = new FolderAbstracion("types");
+
+        let files = pkg.getPackageLevelClasses().map(clazz => new TypescriptFile(
+            `${clazz.getName()}.d`, `
+export type ${clazz.getName()} = {
+
+        ${clazz.getAttributes().map(attr => `${attr.getName()}: ${attr.getType().getName()}`).join("\n\t")}
+  Id : string
+}
+
+export type ${clazz.getName()}CreateReq = Pick<${clazz.getName()}, ${clazz.getAttributes().map(attr => `"${attr.getName()}"`).join(" | ")}>
+
+
+export type ${clazz.getName()}ListRes = {
+  "@odata.context": string
+  value: ${clazz.getName()}[]
+}
+
+export type ${clazz.getName()}CreateRes = {
+  statusCode: number
+  uri: string
+  message: string
+}
+
+export type ${clazz.getName()}GetRes = ${clazz.getName()}ListRes
+
+
+export type ${clazz.getName()}UpdateRes = {
+  statusCode: number
+  message: string
+}
+
+export type ${clazz.getName()}DeleteRes = ${clazz.getName()}UpdateRes
+            `, [], typescriptSintaxe, []
+        ))
 
         files.forEach(file => folder.addFile(file));
 

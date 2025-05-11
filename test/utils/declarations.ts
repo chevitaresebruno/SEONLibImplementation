@@ -5,10 +5,13 @@ import AttributeAbstraction from "../../src/abstractions/types/AttributeAbstract
 import PrimitiveTypeAbstraction from "../../src/abstractions/types/PrimitiveTypeAbstraction";
 import { TypeScriptArggument, TypeScriptAttribute } from "./../../src/prefabs/sintaxes/typescript/TSVariables";
 import { typescriptSintaxe } from "./../../src/prefabs/sintaxes/typescript/TSSintaxe";
+import { TypescriptNumber, TypescriptString } from "../../src/prefabs/sintaxes/typescript/TSTypes";
 
-export const NameAttribute = new TypeScriptAttribute("NameAttr", new PrimitiveTypeAbstraction("char[]"));
 
-export const testClass = new ClassAbstraction("TestClass", [], [NameAttribute, new AttributeAbstraction("NumberAttr", new PrimitiveTypeAbstraction("int"))]);
+export const NameAttribute = new TypeScriptAttribute("NameAttr", new TypescriptString());
+
+
+export const testClass = new ClassAbstraction("TestClass", [], [NameAttribute, new AttributeAbstraction("NumberAttr", new TypescriptNumber())]);
 export const baseFile = new FileAbstraction("TestModule", [testClass], typescriptSintaxe);
 
 
