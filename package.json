@@ -1,17 +1,23 @@
 {
   "name": "seon-lib-implementation",
-  "version": "0.0.3",
+  "version": "0.0.31",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  
+  "license": "MIT",
+
   "author": {
     "name": "Bruno Chevitarese",
     "email": "chevitarese.bruno@gmail.com",
     "url": "https://github.com/chevitaresebruno"
   },
-  "main": "index.ts",
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
-    "publish": "npm publish --access public"
+    "publish:public": "npm run build && npm publish --access public"
   },
+
   "devDependencies": {
     "@types/chai": "^5.2.2",
     "@types/node": "^22.15.17",
@@ -22,3 +28,4 @@
     "vitest": "^3.1.3"
   }
 }
+

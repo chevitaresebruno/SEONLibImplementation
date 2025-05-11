@@ -1,6 +1,6 @@
 import AttributeAbstraction from "../types/AttributeAbstraction.js";
 import ClassAbstraction from "../oo/ClassAbstraction.js";
-import { ModifierOptions, ModifierOptions } from "../shared/Enums.js";
+import { ModifierOptions } from "../shared/Enums.js";
 import MethodAbstraction from "../oo/MethodAbstraction.js";
 
 export interface CommentAbstraction

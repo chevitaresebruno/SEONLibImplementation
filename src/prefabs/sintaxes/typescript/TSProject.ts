@@ -18,8 +18,10 @@ export class TypescriptConstrains
         this._type = _type;
         this.isFunction = isFunction;
 
+        //@ts-ignore
         if(value.getOption != undefined)
         {
+            //@ts-ignore
             let cm = typescriptSintaxe.defineClassMethod(value);
             this.value = `${cm.declaration}(${cm.arguments}) => { ${cm.body}; }`;
         }

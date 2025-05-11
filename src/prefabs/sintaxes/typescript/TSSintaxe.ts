@@ -117,7 +117,9 @@ class TypescriptClassImplementationOrder extends ClassImplementationOrder
             return [];
 
         return [
+            //@ts-ignore
             new ClassImplementationConfigOrder(this.clazz.methodKeyword),
+            //@ts-ignore
             new ClassImplementationConfigOrder(this.clazz.methodName, ""),
         ]
     }
@@ -128,9 +130,13 @@ class TypescriptClassImplementationOrder extends ClassImplementationOrder
             return [];
 
         return [
+            //@ts-ignore
             new ClassImplementationConfigOrder(this.clazz.attrVisibility),
+            //@ts-ignore
             new ClassImplementationConfigOrder(this.clazz.attrModifier),
+            //@ts-ignore
             new ClassImplementationConfigOrder(this.clazz.attrName, ": "),
+            //@ts-ignore
             new ClassImplementationConfigOrder(this.clazz.attrType, ""),
         ]
     }
@@ -140,7 +146,9 @@ class TypescriptClassImplementationOrder extends ClassImplementationOrder
             return [];
 
         return [
+            //@ts-ignore
             new ClassImplementationConfigOrder(this.clazz.constructorVisibility),
+            //@ts-ignore
             new ClassImplementationConfigOrder(this.clazz.constructorKeyword, ""),
         ]
     }
@@ -150,7 +158,9 @@ class TypescriptClassImplementationOrder extends ClassImplementationOrder
             return [];
 
         return [
+            //@ts-ignore
             new ClassImplementationConfigOrder(this.clazz.argumentName, ": "),
+            //@ts-ignore
             new ClassImplementationConfigOrder(this.clazz.argumentType, ""),
         ]
     }
@@ -160,8 +170,11 @@ class TypescriptClassImplementationOrder extends ClassImplementationOrder
             return [];
 
         return [
+            //@ts-ignore
             new ClassImplementationConfigOrder(this.clazz.methodVisibility),
+            //@ts-ignore
             new ClassImplementationConfigOrder(this.clazz.methodModifier),
+            //@ts-ignore
             new ClassImplementationConfigOrder(this.clazz.methodName, ""),
         ]
     }
