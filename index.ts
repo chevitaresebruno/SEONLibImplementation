@@ -3,5 +3,9 @@ import ProjectAbstraction from "../src/abstractions/ProjectAbstraction";
 import { vueModularArchProjectSettings } from "../src/prefabs/sintaxes/typescript/VueModularArchitecture";
 
 
-module.exports = vueModularArchProjectSettings, ProjectAbstraction, PackageAbstraction
-
+export default { 
+    vueModularArchProjectSettings, 
+    ProjectAbstraction, 
+    PackageAbstraction 
+  };
+  

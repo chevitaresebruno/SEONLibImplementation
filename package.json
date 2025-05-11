@@ -1,6 +1,6 @@
 {
   "name": "seon-lib-implementation",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "author": {
     "name": "Bruno Chevitarese",
     "email": "chevitarese.bruno@gmail.com",
@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
-    "publish": "npm publish --access public",
+    "publish": "npm publish --access public"
   },
   "devDependencies": {
     "@types/chai": "^5.2.2",
