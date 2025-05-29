@@ -13,8 +13,6 @@ export enum FileOpenModes
 
 export default class IOOperationsHandler
 {
-    private static error: Error | null = null;
-
     public static createFolder(folderCompleteName: fs.PathLike, force: boolean = true, debug: boolean = true): FolderAlredyExistsError | Error | void
     {
         if(fs.existsSync(folderCompleteName))
@@ -22,6 +20,7 @@ export default class IOOperationsHandler
             if(force)
             {
                 console.log(`Warrning, the folder "${folderCompleteName}" alredy exists`);
+                return;
             }
             else
             {
@@ -29,16 +28,11 @@ export default class IOOperationsHandler
             }
         }
 
-        IOOperationsHandler.error = null;
         let mkDirConf = { recursive: force };
-        let mkDirErrorHandler = debug ? IOOperationsHandler.defaultCallBackError : (err: Error | null)=>{};
-
-        fs.mkdir(folderCompleteName, mkDirConf, mkDirErrorHandler);
-        if(IOOperationsHandler.error != null)
-            { throw IOOperationsHandler.error; }
+        fs.mkdirSync(folderCompleteName, mkDirConf);
     }
 
-    public static createFile(targetFolder: fs.PathLike, fileName: fs.PathLike, content: string, mode: FileOpenModes = FileOpenModes.WriteOrOverwrite, force: boolean = false, debug: boolean = true): FolderNotExistsError | void
+    public static createFile(targetFolder: fs.PathLike, fileName: fs.PathLike, content: string, mode: FileOpenModes = FileOpenModes.WriteOrOverwrite, force: boolean = false, debug: boolean = true): FolderNotExistsError | FileAlredyExistsError | void
     {
         const fileFullPath = targetFolder.toString().endsWith("/") ? `${targetFolder}${fileName}` : `${targetFolder}/${fileName}`; /** Build the full file name with directory and name. */
 
@@ -67,48 +61,19 @@ export default class IOOperationsHandler
         }
         else
         {
-            IOOperationsHandler.error = null;
-            fs.open(fileFullPath, "r+", (err, fd)=>{IOOperationsHandler.defaultCallBackError(err, fileName.toString()); });
-            if(IOOperationsHandler.error != null)
-                { throw IOOperationsHandler.error; }
+            if(!fs.existsSync(fileFullPath))
+                { fs.writeFileSync(fileFullPath, ""); }
         }
 
-        IOOperationsHandler.error = null;
         switch(mode)
         {
             case FileOpenModes.WriteOrOverwrite:
-                fs.writeFile(fileFullPath, content, ()=>{IOOperationsHandler.defaultNoParamsCallBack(fileFullPath, debug)});
-                if(IOOperationsHandler.error != null)
-                    throw IOOperationsHandler.error;
+                fs.writeFileSync(fileFullPath, content);
                 break;
             case FileOpenModes.Append:
-                fs.appendFile(fileFullPath, content, ()=>{IOOperationsHandler.defaultNoParamsCallBack(fileFullPath, debug)});
-                if(IOOperationsHandler.error != null)
-                    throw IOOperationsHandler.error;
+                fs.appendFileSync(fileFullPath, content);
                 break;
         }
-    }
-
-    private static defaultNoParamsCallBack(fileReference: string, debug: boolean): void
-    {
-        const text = `Error while creating "${fileReference}"`;
-
-        if(debug)
-            { console.error(text); }
-
-        IOOperationsHandler.error = new Error(text);
-    }
-
-    private static defaultCallBackError(err: Error | null, fileName: string | undefined)
-    {
-        if(err)
-        {
-            console.error(`Error while creating "${err}"`);
-            IOOperationsHandler.error = err;
-            return;
-        }
-
-        console.log(`Successfull creating of "${fileName}".`);
     }
 }
 
