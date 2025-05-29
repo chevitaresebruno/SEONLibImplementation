@@ -8,5 +8,5 @@
     "strict": true,
     "esModuleInterop": true
   },
-  "include": ["src", "src/index.ts"]
+  "include": ["src/abstraction", "src/error", "src/prefabs", "src/utils", "src/index.ts"]
 }
