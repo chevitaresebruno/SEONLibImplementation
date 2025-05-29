@@ -40,5 +40,10 @@ export default class AttributeAbstraction
     {
         return this.visibility;
     }
+
+    public getDefaultValue(): string
+    {
+        return this.defaultValue;
+    }
 }
 

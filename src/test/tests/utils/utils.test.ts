@@ -1,9 +1,9 @@
-import IOOperationsHandler, { FileOpenModes } from '../utils/IOOperationsHandler'
-import FolderAlredyExistsError from '../error/FolderAlredyExistsError';
-import ITester, { TestDTO } from './ITete';
-import FolderNotExistsError from '../error/FolderNotExistsError';
-import FileAlredyExistsError from '../error/FileAlredyExistsError';
-import Tester from './Tester';
+import IOOperationsHandler, { FileOpenModes } from '../../../utils/IOOperationsHandler'
+import FolderAlredyExistsError from '../../../error/FolderAlredyExistsError';
+import ITester, { TestDTO } from '../../ITete';
+import FolderNotExistsError from '../../../error/FolderNotExistsError';
+import FileAlredyExistsError from '../../../error/FileAlredyExistsError';
+import Tester from '../../Tester';
 import * as fs from 'fs';
 
 

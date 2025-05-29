@@ -33,12 +33,14 @@ export interface ClassImplementation
     attrModifier(attr: AttributeAbstraction): string;
     attrName(attr: AttributeAbstraction): string;
     attrType(attr: AttributeAbstraction): string;
+    attrDefaultValue(attr: AttributeAbstraction): string;
 
     constructorVisibility(clazz: ClassAbstraction): string;
     constructorKeyword(clazz: ClassAbstraction): string;
 
     argumentName(arg: ArggumentAbstraction): string;
     argumentType(arg: ArggumentAbstraction): string;
+    argumentDefaultValue(arg: ArggumentAbstraction): string;
 
     methodKeyword(method: MethodAbstraction): string;
     methodVisibility(method: MethodAbstraction): string;
@@ -71,21 +73,21 @@ export abstract class ClassImplementationOrder
 }
 
 
-interface ConstructorData
+export interface ConstructorData
 {
     declaration: string,
     arguments: string[],
     body: string[],
 }
 
-interface MethodsData
+export interface MethodsData
 {
     declaration: string;
     arguments: string[];
     body: string[];
 }
 
-interface ClazzData
+export interface ClazzData
 {
     declaration: string,
     attributes: string[],
@@ -163,13 +165,12 @@ export default class Sintaxe
 
     private decalreArggument(argg: ArggumentAbstraction): string
     {
-        console.log("JASLKJLASDJLAJSDLJLDASJLSAD");
         return this.clsImpl.getArggumentDeclarationOrder().map(order => order.call(argg)).join("");
     }
 
     private defineClassAttr(attr: AttributeAbstraction): string
     {
-        return `${this.reserverData.classReference}${this.reserverData.classSubAccess}${attr.getName()}`;
+        return `${this.reserverData.classReference}${this.reserverData.classSubAccess}${attr.getName()}: ${attr.getType()} = ${attr.getName()}`;
     }
 
     private defineClassMethods(clazz: ClassAbstraction): MethodsData[]

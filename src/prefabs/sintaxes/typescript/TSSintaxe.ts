@@ -14,9 +14,9 @@ class TypeScriptWrapper implements VisibilityWrapper, ModifierWrapper
         switch(modifier)
         {
             case ModifierOptions.STATIC:
-                return "static";
+                return "static ";
             case ModifierOptions.ABSTRACT:
-                return "abstract";
+                return "abstract ";
             case ModifierOptions.CONCRETE:
                 return "";
         }
@@ -71,6 +71,12 @@ class TypeScriptClassImplemetantion implements ClassImplementation
         return attr.getType().getName();
     }
 
+    attrDefaultValue(attr: AttributeAbstraction): string
+    {
+        let dv = attr.getDefaultValue();
+        return dv.length > 0 ? ` = ${dv}` : "";
+    }
+
     constructorVisibility(clazz: ClassAbstraction): string {
         return "public";
     }
@@ -87,6 +93,11 @@ class TypeScriptClassImplemetantion implements ClassImplementation
         return arg.getType().getName();
     }
 
+    argumentDefaultValue(arg: ArggumentAbstraction): string {
+        let dv = arg.getDefaultValue();
+        return dv.length > 0 ? ` = ${dv}` : "";
+    }
+
     methodKeyword(method: MethodAbstraction): string {
         return "";
     }
@@ -96,7 +107,8 @@ class TypeScriptClassImplemetantion implements ClassImplementation
     }
 
     methodModifier(method: MethodAbstraction): string {
-        return "";
+        let wrapper = new TypeScriptWrapper();
+        return wrapper.wrapModifier(method.getOption());
     }
 
     methodName(method: MethodAbstraction): string {
@@ -133,11 +145,13 @@ class TypescriptClassImplementationOrder extends ClassImplementationOrder
             //@ts-ignore
             new ClassImplementationConfigOrder(this.clazz.attrVisibility),
             //@ts-ignore
-            new ClassImplementationConfigOrder(this.clazz.attrModifier),
+            new ClassImplementationConfigOrder(this.clazz.attrModifier, ""),
             //@ts-ignore
             new ClassImplementationConfigOrder(this.clazz.attrName, ": "),
             //@ts-ignore
             new ClassImplementationConfigOrder(this.clazz.attrType, ""),
+            //@ts-ignore
+            new ClassImplementationConfigOrder(this.clazz.attrDefaultValue, ""),
         ]
     }
 
@@ -162,6 +176,8 @@ class TypescriptClassImplementationOrder extends ClassImplementationOrder
             new ClassImplementationConfigOrder(this.clazz.argumentName, ": "),
             //@ts-ignore
             new ClassImplementationConfigOrder(this.clazz.argumentType, ""),
+            //@ts-ignore
+            new ClassImplementationConfigOrder(this.clazz.argumentDefaultValue, ""),
         ]
     }
 
@@ -173,7 +189,7 @@ class TypescriptClassImplementationOrder extends ClassImplementationOrder
             //@ts-ignore
             new ClassImplementationConfigOrder(this.clazz.methodVisibility),
             //@ts-ignore
-            new ClassImplementationConfigOrder(this.clazz.methodModifier),
+            new ClassImplementationConfigOrder(this.clazz.methodModifier, ""),
             //@ts-ignore
             new ClassImplementationConfigOrder(this.clazz.methodName, ""),
         ]
@@ -208,7 +224,7 @@ export class TypescriptSintaxe extends Sintaxe
 {
     public constructor()
     {
-        super(new TypescriptClassImplementationOrder(), typescriptReversedData, typescriptFileData);
+        super(new TypescriptClassImplementationOrder(new TypeScriptClassImplemetantion()), typescriptReversedData, typescriptFileData);
     }
 }
 

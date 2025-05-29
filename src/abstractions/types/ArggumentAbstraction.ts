@@ -23,5 +23,10 @@ export default class ArggumentAbstraction
     {
         return this._type;
     }
+
+    public getDefaultValue(): string
+    {
+        return this.defaultValue;
+    }
 }
 
