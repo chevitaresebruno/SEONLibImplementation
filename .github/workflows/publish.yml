@@ -25,8 +25,8 @@ jobs:
       - run: npm run build
       - run: npm audit signatures
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          {GH_TOKEN}: ${{ secrets.GH_TOKEN }}
+          {NPM_TOKEN}: ${{ secrets.NPM_TOKEN }}
       - run: |
           if [ -z "${NPM_TOKEN}" ]; then
             echo "NPM_TOKEN is NOT set"
