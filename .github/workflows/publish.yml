@@ -12,10 +12,6 @@ permissions:
   issues: write
   pull-requests: write  
 
-env:
-  GH_TOKEN: ${{ secrets.GH_TOKEN }}
-  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -28,15 +24,18 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm audit signatures
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: |
-          if [ -z "$env.NPM_TOKEN" ]; then
+          if [ -z "$NPM_TOKEN" ]; then
             echo "NPM_TOKEN is NOT set"
             exit 1
           else
             echo "NPM_TOKEN is set"
           fi
       - run: |
-          if [ -z "$env.GH_TOKEN" ]; then
+          if [ -z "$GH_TOKEN" ]; then
             echo "GH_TOKEN is NOT set"
             exit 1
           else
