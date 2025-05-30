@@ -21,10 +21,9 @@ jobs:
           node-version: '20.17.0'
           registry-url: https://registry.npmjs.org/
       - run: npm ci
-      - run: npm test
-      - run: npm build
+      - run: npm run build
       - run: npm audit signatures
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: npm publish --provenance --access public
+      - run: npm run publish:github
 
