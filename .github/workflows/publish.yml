@@ -28,7 +28,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: |
-          if [ -z "$env.NPM_TOKEN" ]; then
+          if [ -z "${NPM_TOKEN}" ]; then
             echo "NPM_TOKEN is NOT set"
             exit 1
           else
