@@ -6,13 +6,13 @@ on:
   pull_request:
     branches: [ "main" ]
 
-environment: publish
 
 env:
   NPM_TOKEN: ${{ secrets.TEST_TOKEN }}
 
 jobs:
   build:
+    environment: publish
     runs-on: ubuntu-latest
     permissions:
       contents: read
