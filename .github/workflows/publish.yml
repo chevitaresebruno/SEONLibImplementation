@@ -22,16 +22,15 @@ jobs:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org/'
       - run: |
-          AUTH_URL="//registry.npmjs.org/:_authToken=$env.NPM_TOKEN"
-          if [ -z "$AUTH_URL" ]; then
-            echo "❌ AUTH_URL NÃO está definida"
+          if [ -z "$env.NPM_TOKEN" ]; then
+            echo "❌ NPM_TOKEN NÃO está definida"
             exit 1
           else
-            echo "✅ AUTH_URL está definida corretamente"
+            echo "✅ NPM_TOKEN está definida corretamente"
           fi
       - run: npm ci
       - run: npm run test:github
       - run: npm run build:github
-      - run: npm config set $AUTH_URL
+      - run: npm config set //registry.npmjs.org/:_authToken=${{ NPM_TOKEN }}
       - run: npm run publish:github
 
