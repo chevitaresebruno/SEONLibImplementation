@@ -31,6 +31,6 @@ jobs:
       - run: npm ci
       - run: npm run test:github
       - run: npm run build:github
-      - run: npm config set //registry.npmjs.org/:_authToken=${{ vars.TEMP_TOKEN }}
+      - run: npm config set //registry.npmjs.org/:_authToken=${{ env.NPM_TOKEN }}
       - run: npm run publish:github
 
