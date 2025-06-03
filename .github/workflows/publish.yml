@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  GH_TOKEN: ${{ secrets.GH_TOKEN }}
-  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
 permissions:
   contents: write
   id-token: write
@@ -25,6 +21,8 @@ jobs:
         with:
           node-version: '20.17.0'
           registry-url: https://registry.npmjs.org/
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm ci
       - run: npm run build
       - run: npm audit signatures
