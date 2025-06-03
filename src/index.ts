@@ -1,3 +1,5 @@
+export { default as VueModularArchitecture } from "./prefabs/sintaxes/typescript/VueModularArchitecture";
+
 export { default as ClassAbstraction } from "./abstractions/oo/ClassAbstraction";
 export { default as PackageAbstraction } from "./abstractions/project/PackageAbstraction";
 export { default as ProjectAbstraction } from "./abstractions/ProjectAbstraction";
@@ -16,4 +18,3 @@ export {
 } from "./prefabs/sintaxes/typescript/TSTypes";
 export { TypeScriptArggument, TypeScriptAttribute } from "./prefabs/sintaxes/typescript/TSVariables";
 export { vueModularArchProjectSettings } from "./prefabs/sintaxes/typescript/VueModularArchitecture";
-
