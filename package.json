@@ -16,7 +16,10 @@
     "build": "npm run test && tsc",
     "test": "vitest run",
     "publish:public": "npm run build && npm publish --access public",
-    "publish:github": "npm publish --access public"
+    "test:github": "vitest run",
+    "build:github": "tsc",
+    "publish:github": "npm publish --access public",
+
   },
   "devDependencies": {
     "@types/node": "^22.15.24",
