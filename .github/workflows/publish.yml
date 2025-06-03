@@ -21,8 +21,8 @@ jobs:
         with:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org/'
-      - run: AUTH_URL="//registry.npmjs.org/:_authToken=$NPM_TOKEN"
       - run: |
+          AUTH_URL="//registry.npmjs.org/:_authToken=$NPM_TOKEN"
           if [ -z "$AUTH_URL" ]; then
             echo "❌ AUTH_URL NÃO está definida"
             exit 1
