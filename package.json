@@ -18,7 +18,7 @@
     "publish:public": "npm run build && npm publish --access public",
     "test:github": "vitest run",
     "build:github": "tsc",
-    "publish:github": "npm publish --access public --registry http://verdaccio/npm/"
+    "publish:github": "npm publish --access public"
 
   },
   "devDependencies": {
