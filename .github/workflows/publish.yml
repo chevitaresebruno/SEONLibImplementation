@@ -12,11 +12,10 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
-      # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-          registry-url: 'https://registry.npmjs.org/${{ secrest.NPM_TOKEN }}'
+          registry-url: 'https://registry.npmjs.org/${{ secrets.NPM_TOKEN }}'
       - run: npm ci
       - run: npm run test:github
       - run: npm run build:github
