@@ -22,7 +22,7 @@ jobs:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org/'
       - run: |
-          if [ -z "$NPM_TOKEN" ]; then
+          if [ -z "$env.NPM_TOKEN" ]; then
             echo "❌ NPM_TOKEN NÃO está definida"
             exit 1
           else
@@ -31,6 +31,6 @@ jobs:
       - run: npm ci
       - run: npm run test:github
       - run: npm run build:github
-      - run: npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
+      - run: npm config set //registry.npmjs.org/:_authToken=$env.NPM_TOKEN
       - run: npm run publish:github
 
