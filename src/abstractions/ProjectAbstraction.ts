@@ -47,5 +47,20 @@ export default class ProjectAbstraction
         
         _package.getSubfolders().forEach(subfolder => this.buildPackage(packageFolder, subfolder, force));
     }
+
+    public getProjectName(): string
+    {
+        return this.name;
+    }
+
+    public getSpecifications(): ProjectSpecifications
+    {
+        return this.specifications;
+    }
+
+    public getCoresPackages(): PackageAbstraction[]
+    {
+        return this.corePackages;
+    }
 }
 
