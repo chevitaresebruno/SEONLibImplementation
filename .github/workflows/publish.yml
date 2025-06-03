@@ -6,6 +6,8 @@ on:
   pull_request:
     branches: [ "main" ]
 
+environment: publish
+
 env:
   NPM_TOKEN: ${{ secrets.TEST_TOKEN }}
 
