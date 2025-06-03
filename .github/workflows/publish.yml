@@ -27,19 +27,5 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: |
-          if [ -z "${NPM_TOKEN}" ]; then
-            echo "NPM_TOKEN is NOT set"
-            exit 1
-          else
-            echo "NPM_TOKEN is set"
-          fi
-      - run: |
-          if [ -z "$GH_TOKEN" ]; then
-            echo "GH_TOKEN is NOT set"
-            exit 1
-          else
-            echo "GH_TOKEN is set"
-          fi
       - run: npx semantic-release
 
